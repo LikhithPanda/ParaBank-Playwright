@@ -1,0 +1,15 @@
+
+# Environment variables
+.env
+
+# Claude Code
+CLAUDE.md
+
+# Playwright
+.playwright-mcp/
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
