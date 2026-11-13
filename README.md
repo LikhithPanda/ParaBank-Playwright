@@ -35,7 +35,7 @@ The second command downloads the browsers Playwright needs (Chromium, Firefox, W
 This project reads its configuration from a `.env` file in the project root. It is **not committed to git** (see `.gitignore`), so you need to create it yourself:
 
 ```
-BASE_URL=https://parabank.parasoft.com/parabank/
+BASE_URL=https://parabank.parasoft.com
 USERNAME=john
 PASSWORD=demo
 ```
@@ -73,7 +73,7 @@ tests/
 ## Design Principles
 
 - **API clients are thin.** Each client (`AuthClient`, `AccountClient`, `TransferClient`) only builds the request and returns Playwright's raw `APIResponse`. Parsing the body and asserting on it happens in the test, not the client.
-- **Page Objects only contain locators and interaction methods — never assertions.** A page object can tell you *what's on the page* and *how to interact with it*; whether that's correct is the test's job.
+- **Page Objects only contain locators and interaction methods — never assertions.** A page object can tell you _what's on the page_ and _how to interact with it_; whether that's correct is the test's job.
 - **Locators prefer `getByRole`, falling back to attribute/CSS selectors only where the app has no accessible name to use.** ParaBank's forms don't use `<label>` elements anywhere, so most text inputs and dropdowns fall back to attribute selectors — this is called out with a comment at each such locator, so it reads as a deliberate choice, not an oversight.
 - **Fixtures remove repeated setup from tests.** `fixtures/pages.fixture.ts` extends Playwright's `test` so tests can ask for `loginPage`, `transferFundsPage`, etc. directly instead of constructing them, and an `authenticatedPage` fixture logs in once automatically for any test that needs a logged-in session.
 
@@ -98,21 +98,21 @@ Only the `chromium` project is currently enabled in `playwright.config.ts` (Fire
 
 ### API tests (`tests/api`)
 
-| File | Covers |
-|---|---|
-| `auth.spec.ts` | Successful login; invalid username rejected; invalid password rejected |
-| `account.spec.ts` | Get a customer's accounts; get details for a single account |
-| `transfer.spec.ts` | Successful transfer between two accounts |
+| File               | Covers                                                                 |
+| ------------------ | ---------------------------------------------------------------------- |
+| `auth.spec.ts`     | Successful login; invalid username rejected; invalid password rejected |
+| `account.spec.ts`  | Get a customer's accounts; get details for a single account            |
+| `transfer.spec.ts` | Successful transfer between two accounts                               |
 
 ### UI tests (`tests/ui`)
 
-| File | Covers |
-|---|---|
-| `login.spec.ts` | Successful login; invalid credentials show an error |
-| `open-new-account.spec.ts` | Opens a new checking account successfully |
-| `transfer-funds.spec.ts` | Transfers funds between two accounts |
-| `update-contact-info.spec.ts` | Updates the customer's profile successfully |
-| `request-loan.spec.ts` | Submits a loan request and confirms it was processed |
+| File                          | Covers                                               |
+| ----------------------------- | ---------------------------------------------------- |
+| `login.spec.ts`               | Successful login; invalid credentials show an error  |
+| `open-new-account.spec.ts`    | Opens a new checking account successfully            |
+| `transfer-funds.spec.ts`      | Transfers funds between two accounts                 |
+| `update-contact-info.spec.ts` | Updates the customer's profile successfully          |
+| `request-loan.spec.ts`        | Submits a loan request and confirms it was processed |
 
 ---
 
